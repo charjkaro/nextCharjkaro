@@ -3,19 +3,20 @@
 import Navbar from "@/components/Navbar/Navbar";
 import PcNav from "@/components/Navbar/PcNav";
 import Footer from "@/components/footer/Footer";
-
+import Image from "next/image";
 
 const Aboutus = () => {
   return (
     <>
-   
       <div>
         <Navbar />
-        <PcNav/>
+        <PcNav />
         <div className="">
           <div className="my-10  min-h-[40vh] items-center justify-center gap-5 p-10 md:flex">
             <div data-aos="fade-left" className="]">
-              <img
+              <Image
+                width={300}
+                height={500}
                 src="           https://firebasestorage.googleapis.com/v0/b/charjkaro-7a3bc.appspot.com/o/no-bg-logo.png?alt=media&token=afcc0834-b6e6-4545-9d3b-26f993572e5e"
                 className="w-72 "
                 alt=""
@@ -193,10 +194,12 @@ const Aboutus = () => {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <img
+                  <Image
+                    width={30}
+                    height={30}
                     src="https://cdn4.iconfinder.com/data/icons/social-icons-16/512/LinkedIn_alt-512.png"
                     className="w-8 transition-transform duration-200 ease-in-out hover:translate-x-2 hover:scale-95"
-                    alt=""
+                    alt="Raghu Khanna"
                   />
                 </a>
                 <a
@@ -204,7 +207,9 @@ const Aboutus = () => {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <img
+                  <Image
+                    width={30}
+                    height={30}
                     src="https://cdn2.iconfinder.com/data/icons/threads-by-instagram/24/x-logo-twitter-new-brand-256.png"
                     className="w-8 transition-transform duration-200 ease-in-out hover:translate-x-2 hover:scale-95"
                     alt=""
@@ -235,7 +240,7 @@ const Aboutus = () => {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <img
+                  <Image width={30} height={30}
                     src="https://cdn4.iconfinder.com/data/icons/social-icons-16/512/LinkedIn_alt-512.png"
                     className="w-8 transition-transform duration-200 ease-in-out hover:translate-x-2 hover:scale-95"
                     alt=""
@@ -246,7 +251,7 @@ const Aboutus = () => {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <img
+                  <Image width={30} height={30}
                     src="https://cdn2.iconfinder.com/data/icons/threads-by-instagram/24/x-logo-twitter-new-brand-256.png"
                     className="w-8 transition-transform duration-200 ease-in-out hover:translate-x-2 hover:scale-95"
                     alt=""
