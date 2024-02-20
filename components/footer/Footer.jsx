@@ -2,33 +2,41 @@
 
 import Image from "next/image";
 import { handleSubmit } from "./handleSubmit";
+import { handleNewsLetter } from "@/app/action/handleNewsLetter";
 
 const Footer = () => {
   const handleSubmit = async (event) => {
+    // event.preventDefault();
+
+    // const formData = {
+    //   email: event.target.elements.email.value,
+    // };
+    // try {
+    //   const response = await fetch("/api/newsletter", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(formData),
+    //   });
+    //   if (!response.ok) {
+    //     alert(`HTTP error! status: ${response.status}`)
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
+
+    //   const data = await response.json();
+
+    //   event.target.reset();
+    // } catch (error) {
+    //   console.error("something is wrong");
+    // }
+
+    // alert("Thank you for signing up for newsletter");
     event.preventDefault();
-
-    const formData = {
-      email: event.target.elements.email.value,
-    };
-    try {
-      const response = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        alert(`HTTP error! status: ${response.status}`)
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      event.target.reset();
-    } catch (error) {
-      console.error("something is wrong");
-    }
-
-    alert("Thank you for signing up for newsletter");
+    const formData = new FormData(event.target);
+    const data = await handleNewsLetter
+    (Object.fromEntries(formData));
+    // console.log(data);
+    event.target.reset();
+    alert("Thank you!!");
   };
 
   return (

@@ -1,8 +1,7 @@
 // import { db } from "../../config/firebase";
 "use client";
-import { db } from "@/config/firebase";
-import axios from "axios";
-import { collection, addDoc } from "firebase/firestore";
+
+import { handleContactForm } from "../action/handleContactForm";
 
 const ContactForm = () => {
   // const handleSubmit = async (event) => {
@@ -26,33 +25,39 @@ const ContactForm = () => {
   // };
 
   const handleSubmit = async (event) => {
+    // event.preventDefault();
+
+    // const formData = {
+    //   name: event.target.elements.name.value,
+    //   email: event.target.elements.email.value,
+    //   phone: event.target.elements.phone.value,
+    //   company: event.target.elements.company.value,
+    //   message: event.target.elements.message.value,
+    // };
+
+    // try {
+    //   const response = await fetch("/api/hello", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(formData),
+    //   });
+
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
+
+    //   const data = await response.json();
+
+    //   event.target.reset();
+    // } catch (error) {
+    //   console.error("something went wrong");
+    // }
     event.preventDefault();
-
-    const formData = {
-      name: event.target.elements.name.value,
-      email: event.target.elements.email.value,
-      phone: event.target.elements.phone.value,
-      company: event.target.elements.company.value,
-      message: event.target.elements.message.value,
-    };
-
-    try {
-      const response = await fetch("/api/hello", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      event.target.reset();
-    } catch (error) {
-      console.error("something went wrong");
-    }
+    const formData = new FormData(event.target);
+    const data = await handleContactForm(Object.fromEntries(formData));
+    // console.log(data);
+    event.target.reset();
+    alert("Thank you!!");
   };
 
   return (
