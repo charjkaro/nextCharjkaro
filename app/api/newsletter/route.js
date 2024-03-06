@@ -4,7 +4,8 @@ import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "@/config/firebase";
 import { data } from "autoprefixer";
 import { get, set } from "lodash";
-
+import Cors from "cors";
+import NextCors from "nextjs-cors";
 export async function GET() {
   return NextResponse.json({ message: "Method Not Allowed" });
 }
@@ -36,6 +37,21 @@ export async function GET() {
 //   }
 //   return Response.json(data);
 // }
+
+const cors = Cors({
+  methods: ["GET", "HEAD", "POST", "PUT", "DELETE"],
+  origin: "*", // This will allow access to all resources, or specify origins
+});
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
+}
 
 const rateLimit = 3; // Number of allowed requests per minute
 const rateLimiter = {};
@@ -73,6 +89,13 @@ async function validateEmail(email) {
   }
 }
 export async function POST(req, res) {
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+  await runMiddleware(req, res, cors);
   const ip = req.headers["x-forwarded-for"];
 
   if (!rateLimiterMiddleware(ip)) {
@@ -94,7 +117,11 @@ export async function POST(req, res) {
     if (!emailRegex.test(String(email).toLowerCase())) {
       console.log("Invalid email format.", email);
       // return new NextResponse(400).json({ error: "Invalid email format." })
-      return Response.json({ error: "Invalid email format." }, { status: 400 },{email: email});
+      return Response.json(
+        { error: "Invalid email format." },
+        { status: 400 },
+        { email: email }
+      );
     }
 
     console.log("Processed data:", email);

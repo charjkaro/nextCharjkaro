@@ -4,12 +4,13 @@ import { get, set } from "lodash";
 import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "@/config/firebase";
 import { data } from "autoprefixer";
+import NextCors from "nextjs-cors";
 
 const rateLimit = 3; // Number of allowed requests per minute
 const rateLimiter = {};
 
 export async function GET() {
-  return NextResponse.json({ message: "Hello World" });
+  return NextResponse.json({ message: "Hello contact form" });
 }
 const rateLimiterMiddleware = (ip) => {
   const now = Date.now();
@@ -25,6 +26,12 @@ const rateLimiterMiddleware = (ip) => {
   return requestTimestamps.length <= rateLimit;
 };
 export async function POST(req, res) {
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   const ip = req.headers["x-forwarded-for"];
 
   if (!rateLimiterMiddleware(ip)) {
